@@ -44,9 +44,12 @@ public class Driver {
 		Tokenizer tokenizer = ctx.getBean(Tokenizer.class);
 
 		String[] sentence = tokenizer.tokenize(input);
+		long start = System.currentTimeMillis();
 		for (Entry<String, NameFinderME> model : models.entrySet()) {
 			runModel(sentence, model);
 		}
+		long end = System.currentTimeMillis();
+		logger.info("NLP analysis on {} token(s) took {} seconds", sentence.length,(double) (end - start) / 1000.0);
 		ctx.close();
 	}
 
